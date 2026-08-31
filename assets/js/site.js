@@ -137,6 +137,43 @@
     }
   }
 
+  /* ---- service deep-link -> pre-filled estimate request ---- */
+  var chips = document.querySelector('.chips');
+  if(chips && window.location.search){
+    var MAP = {
+      patios:'Patio Renovation', walkways:'Paver Walkway', kitchens:'Outdoor Kitchen',
+      walls:'Retaining Wall / Beds', turf:'Artificial Turf', irrigation:'Irrigation',
+      drainage:'Drainage', lighting:'Landscape Lighting', design:'Design / Not Sure'
+    };
+    var LABEL = { 'Design / Not Sure':'landscape design' };
+    var q = window.location.search.replace(/^\?/,'').split('&');
+    var raw = '';
+    q.forEach(function(pair){
+      var kv = pair.split('=');
+      if(decodeURIComponent(kv[0]) === 'service') raw = decodeURIComponent((kv[1]||'').replace(/\+/g,' '));
+    });
+    var picked = [];
+    raw.split(',').forEach(function(slug){
+      slug = slug.trim().toLowerCase();
+      var val = MAP[slug];
+      if(!val) return;
+      var input = chips.querySelector('input[value="' + val + '"]');
+      if(input && !input.checked){ input.checked = true; }
+      if(picked.indexOf(val) === -1) picked.push(val);
+    });
+    if(picked.length){
+      var names = picked.map(function(v){ return LABEL[v] || v.toLowerCase(); });
+      var pretty = names.length > 1 ? names.slice(0,-1).join(', ') + ' and ' + names[names.length-1] : names[0];
+      var notice = document.getElementById('svcNotice');
+      var nName = document.getElementById('svcNoticeName');
+      if(notice && nName){ nName.textContent = pretty; notice.hidden = false; }
+      var msg = document.getElementById('msg');
+      if(msg && !msg.value){
+        msg.value = "I'm interested in " + pretty + " for my property.";
+      }
+    }
+  }
+
   /* ---- footer year ---- */
   var y = document.querySelector('[data-year]');
   if(y) y.textContent = new Date().getFullYear();

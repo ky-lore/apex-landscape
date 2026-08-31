@@ -242,6 +242,7 @@ em,.serif-em{font-style:italic;font-family:var(--display)}
 
 /* ---------- service cards ---------- */
 .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+a.svc-card{display:block;text-decoration:none;color:inherit}
 .svc-card{background:#fff;border:1px solid var(--stone);border-radius:var(--radius);
   padding:32px 28px;transition:.4s var(--ease);position:relative;overflow:hidden}
 .svc-card:hover{transform:translateY(-6px);box-shadow:var(--shadow);border-color:transparent}
@@ -576,7 +577,8 @@ em,.serif-em{font-style:italic;font-family:var(--display)}
   body{font-size:16px}
   .svc-grid,.tile-grid,.quote-grid,.offers,.stats,.steps{grid-template-columns:1fr}
   .form__row{grid-template-columns:1fr}
-  .masonry{columns:1}
+  .masonry{columns:2;column-gap:10px}
+  .masonry figure{margin-bottom:10px}
   .footer__top{grid-template-columns:1fr;gap:32px}
   .hero__meta{gap:14px}
   .hero{min-height:82svh}
@@ -590,3 +592,10 @@ em,.serif-em{font-style:italic;font-family:var(--display)}
 @media (max-width:820px){
   aside[style*="sticky"]{position:static!important;top:auto!important}
 }
+
+/* pre-filled service notice on the estimate form */
+.svc-notice{display:flex;gap:11px;align-items:flex-start;padding:14px 16px;border-radius:12px;
+  background:rgba(44,97,65,.07);border:1px solid rgba(44,97,65,.2);font-size:.94rem;color:var(--ink-soft)}
+.svc-notice[hidden]{display:none}
+.svc-notice svg{width:19px;height:19px;flex:none;color:var(--moss);margin-top:2px}
+.svc-notice b{color:var(--forest)}
